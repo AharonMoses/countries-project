@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Country</title>
+</head>
+<body>
+
+    <h2>Add country</h2>
+    <form id="country_form">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id">
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+
+        <label for="capital">capital:</label>
+        <input type="text" id="capital" name="capital">
+
+        <label for="citizens">Number Of Citizens:</label>
+        <input type="text" id="citizens" name="citizens">
+
+        <label for="continent">continent:</label>
+        <input type="text" id="continent" name="continent">
+
+        <label for="flag">flag:</label>
+        <input type="url" id="flag" name="flag">
+
+        <input type="submit" value="Send">        
+    </form>
+    <script>
+        function my_submit(e) {
+            e.preventDefault();
+
+            const new_country = {
+                id: document.getElementById('id').value,
+                name: document.getElementById('name').value,
+                capital: document.getElementById('capital').value,
+                number_of_citizens: document.getElementById('citizens').value,
+                continent: document.getElementById('continent').value,
+                flag: document.getElementById('flag').value
+            }
+
+            const send_details = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(new_country)
+            }
+            fetch('http://localhost:3000/countries/', send_details)
+            .then(response => response.json())
+            .then(data => {
+                alert('new country added')
+            })
+        }
+
+        document.getElementById('country_form').onsubmit = my_submit
+                       
+    </script>
+    
+</body>
+</html>

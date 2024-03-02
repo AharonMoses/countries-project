@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Put Country</title>
+</head>
+<body>
+
+    <body>
+        <h2>Put country</h2>
+        <form id="country_form">
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id">
+    
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+    
+            <label for="capital">capital:</label>
+            <input type="text" id="capital" name="capital">
+    
+            <label for="citizens">Number Of Citizens:</label>
+            <input type="text" id="citizens" name="citizens">
+    
+            <label for="continent">continent:</label>
+            <input type="text" id="continent" name="continent">
+    
+            <label for="flag">flag:</label>
+            <input type="url" id="flag" name="flag">
+    
+            <input type="submit" value="Send">        
+        </form>
+        <script>
+            function my_submit(e) {
+                e.preventDefault();
+    
+                const put_country = {
+                id: document.getElementById('id').value,
+                name: document.getElementById('name').value,
+                capital: document.getElementById('capital').value,
+                number_of_citizens: document.getElementById('citizens').value,
+                continent: document.getElementById('continent').value,
+                flag: document.getElementById('flag').value
+            }
+    
+                if (put_country.id == '') {
+                    delete put_country.id
+                }
+                if (put_country.name == '') {
+                    delete put_country.name
+                }
+                if (put_country.capital == '') {
+                    delete put_country.capital
+                }
+                if (put_country.citizens == '') {
+                    delete put_country.citizens
+                }
+                if (put_country.continent == '') {
+                    delete put_country.continent
+                }
+                if (put_country.flag == '') {
+                    delete put_country.flag
+                }  
+    
+                const send_details = {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(put_country)
+                }
+                fetch(`http://localhost:3000/countries/${document.getElementById('id').value}`, send_details)
+                .then(response => response.json())
+                .then(data => {
+                    alert('country updated')
+                })
+            }
+    
+            document.getElementById('country_form').onsubmit = my_submit
+                            
+        </script>
+    
+</body>
+</html>

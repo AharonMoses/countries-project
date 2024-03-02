@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Country</title>
+</head>
+<body>
+
+    <h2>DELETE</h2>
+
+    DELETE BY ID : <input type="number" id="country_id_txt" value="0">
+    <button id="get_country" onclick="delete_by_id()">DELETE BY ID</button>
+    &nbsp; <span id="result" style="color:red"></span><br><br>
+
+    <script>
+        function delete_by_id() {
+
+            const country_id = document.getElementById('country_id_txt').value
+
+            fetch(`http://localhost:3000/countries/${country_id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.status === 404) {
+                        return null;
+                    }
+                    return response.json()
+                })
+                .then(data => {
+                    if (data == null) {
+                        document.getElementById('result').innerHTML = "Not found ..." 
+                        return                       
+                    }
+
+                    document.getElementById('result').innerHTML = ''                 
+                    alert('deleted')
+                })
+            }
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patch Country</title>
+</head>
+<body>
+
+    <h2>Patch country</h2>
+
+    <form id="country_form">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id">
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+
+        <label for="capital">Capital:</label>
+        <input type="text" id="capital" name="capital">
+
+        <label for="citizens">Citizens:</label>
+        <input type="text" id="citizens" name="citizens">
+
+        <label for="continent">Continent:</label>
+        <input type="text" id="continent" name="continent">
+
+        <label for="flag">Flag:</label>
+        <input type="url" id="flag" name="flag">
+
+        <input type="submit" value="Send">        
+    </form>
+    <script>
+        function my_submit(e) {
+            e.preventDefault();
+
+            const patch_country = {
+                id: document.getElementById('id').value,
+                name: document.getElementById('name').value,
+                capital: document.getElementById('capital').value,
+                number_of_citizens: document.getElementById('citizens').value,
+                continent: document.getElementById('continent').value,
+                flag: document.getElementById('flag').value
+            }
+
+            if (patch_country.id == '') {
+                delete patch_country.id
+            }
+            if (patch_country.name == '') {
+                delete patch_country.name
+            }
+            if (patch_country.capital == '') {
+                delete patch_country.capital
+            }
+            if (patch_country.citizens == '') {
+                delete patch_country.citizens
+            }
+            if (patch_country.continent == '') {
+                delete patch_country.continent
+            }
+            if (patch_country.flag == '') {
+                delete patch_country.flag
+            }                                                                        
+
+            const send_details = {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(patch_country)
+            }
+            fetch(`http://localhost:3000/countries/${document.getElementById('id').value}`, send_details)
+            .then(response => response.json())
+            .then(data => {
+                alert('country patched')
+            })
+        }
+
+        document.getElementById('country_form').onsubmit = my_submit
+                      
+    </script>
+    
+</body>
+</html>
